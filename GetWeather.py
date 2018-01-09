@@ -4,14 +4,21 @@
 # Module name :GetWeather.py
 # Detail      :The script to get weather information.
 # Implementer :R.Ishikawa
-# Version     :1.0
-# Last update :2018/1/8
+# Version     :1.1
+# Last update :2018/1/9
 
 # Version History
-# 1. Create New                         R.Ishikawa  Ver.1.0
+# 1. Create New                         R.Ishikawa  Ver.1.0  2018/1/8
+# 2. Add Line Notify functions          R.Ishikawa  Ver.1.1  2018/1/9
 
 import urllib.request
 from bs4 import BeautifulSoup
+
+# Ver.1.1 START
+import requests
+line_notify_token = 'srbKaXQWWXKvdlDvT1rkuUcE7C213ZnHKSCoCNrBeaP'
+line_notify_api = 'https://notify-api.line.me/api/notify'
+# Ver.1.1 END
 
 # Get Weather Information (Default:Mito, Ibaraki, Japan)
 rssurl = "http://weather.livedoor.com/forecast/rss/area/080010.xml"
@@ -25,5 +32,11 @@ with urllib.request.urlopen(rssurl) as res:
         if title.find("[ PR ]") == -1:
             tenki.append(title)
 
-for i in range(0,8):
-   print(tenki[i])
+for i in range(0,2):
+    # Ver.1.1 START
+    # print(tenki[i])
+    message = tenki[i]
+    payload = {'message': message}
+    headers = {'Authorization': 'Bearer ' + line_notify_token}  # Token
+    line_notify = requests.post(line_notify_api, data=payload, headers=headers)
+    # Ver.1.1 END
