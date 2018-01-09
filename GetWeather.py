@@ -16,7 +16,7 @@ from bs4 import BeautifulSoup
 
 # Ver.1.1 START
 import requests
-line_notify_token = 'srbKaXQWWXKvdlDvT1rkuUcE7C213ZnHKSCoCNrBeaP'
+line_notify_token = 'ACCCESS TOKEN NAME'
 line_notify_api = 'https://notify-api.line.me/api/notify'
 # Ver.1.1 END
 
