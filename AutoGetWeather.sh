@@ -1,9 +1,9 @@
 #!/usr/bin/sh
 # Script name   :AutoGetWeather.sh
-# Detail		:The script to get weather information automatically.
+# Detail        :The script to get weather information automatically.
 # Implementer   :R.Ishikawa
-# Version		:1.0
-# Last update	:2018/1/12
+# Version		     :1.0
+# Last update	  :2018/1/12
 
 # Version History
 # 1. Create New                         R.Ishikawa  Ver.1.0  2018/1/12
