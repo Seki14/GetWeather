@@ -14,5 +14,11 @@
 ## 12Hr = 43200 sec
 ## 24Hr = 86400 sec
  
-while true; do python /Users/RyoISHIKAWA/Desktop/Code/tool/GetWeather/GetWeather.py; sleep 3600; done
+while true
+do
+python /Users/RyoISHIKAWA/Desktop/Code/tool/GetWeather/GetWeather.py
+echo "send message"
+date
+sleep 43200
+done
 
