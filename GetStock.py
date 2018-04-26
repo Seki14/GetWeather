@@ -31,7 +31,7 @@ from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
 
 class sendGmailAttach:
-    username, password = 'seki.ishikawa@gmail.com', 'seki14kawa'
+    username, password = 'your.mailaddress@gmail.com', 'your_password'
 
     def __init__(self, to, sub, body, attach_file):
         host, port = 'smtp.gmail.com', 465
@@ -87,7 +87,7 @@ plt.savefig("NIKKEI225-DJIA.png", bbox_inches="tight")
 #3 Add Main ##################################################################
 
 if __name__ == '__main__':
-    to = 'seki.ishikawa@gmail.com' # To:
+    to = 'your_mailaddress@gmail.com' # To:
     sub_JPNUSD = '[GetStock] Todays JPN/USD' #4 mail title for JPN/USD
     sub_NIKKEI225_DJIA = '[GetStock] Todays NIKKEI225-DJIA' #4 mail title for NIKKEI225-DJIA
     body = '' # body
