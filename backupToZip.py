@@ -1,4 +1,4 @@
-# Tool name             :backupToZip
+# Tool name     :backupToZip
 # Module name   :backupToZip.py
 # Detail        :This's the tool to copy all directories to Zip file
 # Implementer   :R.Ishikawa
