@@ -1,9 +1,9 @@
 # Tool name             :backupToZip
-# Module name       	   :backupToZip.py
-# Detail            	   :This's the tool to copy all directories to Zip file
-# Implementer   	       :R.Ishikawa
-# Version               :1.2
-# Last update           :2018/06/02
+# Module name   :backupToZip.py
+# Detail        :This's the tool to copy all directories to Zip file
+# Implementer   :R.Ishikawa
+# Version       :1.2
+# Last update   :2018/06/02
 
 #Version History
  #1 Create New                                 R.Ishikawa    Ver.1.0  2017/12/01
