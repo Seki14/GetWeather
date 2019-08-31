@@ -18,7 +18,7 @@ import urllib.request
 from bs4 import BeautifulSoup
 import requests
 
-line_notify_token = 'np2OIsiFIRKwOa2EgL8DJuZaJLeaPR83zEK9p5AZ0jR'
+line_notify_token = 'INPUT YOUR TOKEN ID'
 line_notify_api = 'https://notify-api.line.me/api/notify'
 
 # Get Weather Information (Default:Mito, Ibaraki, Japan)
