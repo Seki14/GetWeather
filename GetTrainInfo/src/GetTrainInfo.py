@@ -28,7 +28,7 @@ SENKU_DB = senku_data.readlines()
 URL_DB = url_data.readlines()
 
 # Set Line Notify token and API
-line_notify_token = 'W4lfg2BlQwceh6B1M2HqR4t9MLfmhJXKeZzVC55X83x'
+line_notify_token = 'INPUT YOUR TOKEN ID'
 line_notify_api = 'https://notify-api.line.me/api/notify'
 
 # Import Senku Data and URL from the beginning
