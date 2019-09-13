@@ -4,8 +4,8 @@
 # Module name :GetTrainInfo.py
 # Detail      :The script to get Train information.
 # Implementer :R.Ishikawa
-# Version     :1.3
-# Last update :2019/8/31
+# Version     :1.4
+# Last update :2019/9/13
 
 # Version History
 # 1. Create New                                     R.I Ver.1.0  2019/4/1
@@ -13,6 +13,7 @@
 # 3. Show all Train Delay Information of JR Line 
 #    in Tokyo Metropolitan Area                     R.I Ver.1.2  2019/8/28
 # 4. Divided DB to improve maintainability          R.I Ver.1.3  2019/8/31
+# 5. Added if statement                             R.I Ver.1.4  2019/9/13
 
 from bs4 import BeautifulSoup as bs4
 import urllib.request as ur
@@ -39,7 +40,7 @@ for target_senku, url in zip(SENKU_DB, URL_DB):
     text = target_senku + '\n ' + match
             
     # Export only delay or cancel train information by using LINE Notify
-    if match != '現在、平常通り運転しています。':
+    if (match != '現在、平常通り運転しています。' and match != '情報提供時間は4：00～翌2：00となっています。'):
         message = '\n' + text
         payload = {'message': message}
         headers = {'Authorization': 'Bearer ' + line_notify_token}
