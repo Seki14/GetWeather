@@ -1,14 +1,15 @@
-# Tool name     :backupToZip
-# Module name   :backupToZip.py
-# Detail        :This's the tool to copy all directories to Zip file
-# Implementer   :R.Ishikawa
-# Version       :1.2
-# Last update   :2018/06/02
+# Tool name         :backupToZip
+# Module name       :backupToZip.py
+# Detail            :This's the tool to copy all directories to Zip file
+# Implementer       :R.Ishikawa
+# Version           :1.3
+# Last update       :2019/11/12
 
 #Version History
- #1 Create New                                 R.Ishikawa    Ver.1.0  2017/12/01
- #2 Set path and some comments                 R.Ishikawa    Ver.1.1  2017/12/24
- #3 Set mv operation & command line arguments  R.Ishikawa    Ver.1.2  2018/06/02
+ #1 Create New                                        R.I  Ver.1.0  2017/12/01
+ #2 Set path and some comments                        R.I  Ver.1.1  2017/12/24
+ #3 Set mv operation & command line arguments         R.I  Ver.1.2  2018/06/02
+ #4 Set check directories including args[1] & args[2] R.I  Ver.1.3  2019/11/12 
 
 import zipfile, os, shutil
 import sys
@@ -53,9 +54,15 @@ def backup_to_zip(folder):
                                  backup_zip.write(os.path.join(foldername, filename))
            backup_zip.close()
            
-           # Set abusolute path you want to put zipfile(#3)
+           # Set abusolute path you want to put zipfile
            shutil.move(zip_filename,args[2])
            print('Done. ')
 
-# Set path included files and directories you want to back up(#2,#3)
-backup_to_zip(args[1])
+
+if os.path.exists(args[1]) and os.path.exists(args[2]):
+   # Set path included files and directories you want to back up
+   backup_to_zip(args[1])
+else:
+   # If paths including args[1] and args[2] are not exist
+   # The following message is raised
+   print('Directory not found. ')
