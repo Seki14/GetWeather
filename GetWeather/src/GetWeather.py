@@ -4,8 +4,8 @@
 # Module name :GetWeather.py
 # Detail      :The script to get weather information.
 # Implementer :R.Ishikawa
-# Version     :1.4
-# Last update :2018/10/23
+# Version     :1.5
+# Last update :2020/3/21
 
 # Version History
 # 1. Create New                         R.Ishikawa  Ver.1.0  2018/1/8
@@ -13,6 +13,7 @@
 # 3. Add Description                    R.Ishikawa  Ver.1.2  2018/1/19
 # 4. Add Weather icon                   R.Ishikawa  Ver.1.3  2018/8/17
 # 5. Add 2 icons & delete old comments  R.Ishikawa  Ver.1.4  2018/10/23
+# 6. Add URL notification               R.Ishikawa  Ver.1.5  2020/3/21
 
 import urllib.request
 from bs4 import BeautifulSoup
@@ -42,7 +43,7 @@ with urllib.request.urlopen(rssurl) as res:
 for i in range(0,2):
     message = detail[i]
     payload = {'message': message}
-    headers = {'Authorization': 'Bearer ' + line_notify_token}  # Token
+    headers = {'Authorization': 'Bearer ' + line_notify_token}  # Notify Weather Info & Icon.
     
     if (detail[i].find("晴")) != -1 and (detail[i].find("曇")) == -1 and (detail[i].find("雨")) == -1 and (detail[i].find("雪")) == -1:
        files = {'imageFile': open("/home/pi/Ryo/tools/GetWeather/Sun.png","rb")}
@@ -118,3 +119,8 @@ for i in range(0,2):
 
     else:
        line_notify = requests.post(line_notify_api, data=payload, headers=headers)
+
+message = rssurl
+payload = {'message': message}
+headers = {'Authorization': 'Bearer ' + line_notify_token}  # Notify URL
+line_notify = requests.post(line_notify_api, data=payload, headers=headers)
