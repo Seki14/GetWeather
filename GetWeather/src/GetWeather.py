@@ -23,7 +23,8 @@ line_notify_token = 'INPUT YOUR TOKEN ID'
 line_notify_api = 'https://notify-api.line.me/api/notify'
 
 # Get Weather Information (Default:Mito, Ibaraki, Japan)
-rssurl = "http://weather.livedoor.com/forecast/rss/area/080010.xml"
+rssurl = "http://weather.livedoor.com/forecast/rss/area/080010.xml" # Input target RSS URL
+URL = "http://weather.livedoor.com/area/forecast/080010" # Input target URL
 
 tenki = []
 detail = []
@@ -120,7 +121,7 @@ for i in range(0,2):
     else:
        line_notify = requests.post(line_notify_api, data=payload, headers=headers)
 
-message = rssurl
+message = URL
 payload = {'message': message}
 headers = {'Authorization': 'Bearer ' + line_notify_token}  # Notify URL
 line_notify = requests.post(line_notify_api, data=payload, headers=headers)
