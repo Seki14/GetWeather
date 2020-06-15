@@ -18,6 +18,8 @@ import re
 from collections import deque
 
 import csv
+import sys
+import os
 
 print("\n")
 print("#######################################")
@@ -27,6 +29,12 @@ print("誤記、表記ゆれを検出するツールです。\n")
 
 # チェック対象のファイル名入力
 target_file = input("チェック対象のファイル名称を入力してください:\n")
+
+# チェック対象のファイルがカレントディレクトリにない場合、ツール処理終了
+if os.path.exists(target_file) != True:
+    print("File not found !!")
+    sys.exit()
+
 
 # 出力用CSVファイルを開く
 csv_file = open('CheckResult.csv', 'a', newline="")
