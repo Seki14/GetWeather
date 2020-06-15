@@ -1,0 +1,11 @@
+# Tool name         :SpellChecker
+# Module name       :SpellChecker.py
+# Detail            :誤記、表記ゆれを検出するツールです。
+# 　　　　 　　　　　　"退屈なことはPythonにやらせよう"付録Dの誤記検出ツールをベースにカスタマイズしたものです。　
+#                     https://github.com/oreilly-japan/automatestuff-ja/tree/master/appendix-D
+# Implementer       :R.Ishikawa
+# Version           :1.0
+# Last update       :2020/06/15
+
+# HISTORY
+#1 Create New        Ver.1.0  R.I  2020/06/15
