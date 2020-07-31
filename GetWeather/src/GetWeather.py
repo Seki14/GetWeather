@@ -4,8 +4,8 @@
 # Module name :GetWeather.py
 # Detail      :The script to get weather information.
 # Implementer :R.Ishikawa
-# Version     :1.7
-# Last update :2020/7/12
+# Version     :1.8
+# Last update :2020/7/31
 
 # Version History
 # 1. Create New                         R.Ishikawa  Ver.1.0  2018/1/8
@@ -16,6 +16,7 @@
 # 6. Add URL notification               R.Ishikawa  Ver.1.5  2020/3/21
 # 7. Implement refactoring              R.Ishikawa  Ver.1.6  2020/6/12 
 # 8. Replace Input RSS(livedoor->Yahoo) R.Ishikawa  Ver.1.7  2020/7/12
+# 9. Fixed Minor bug(雲->曇)             R.Ishikawa  Ver.1.8  2020/7/31
 
 import urllib.request
 from bs4 import BeautifulSoup
@@ -53,7 +54,7 @@ def ck_Weather(i, detail):
        files = {'imageFile': open(icon_path + "Sun.png","rb")}
        line_notify = requests.post(line_notify_api, data=payload, headers=headers, files=files)
                             
-   elif (detail[i].find("晴一時曇")) != -1 or (detail[i].find("晴のち曇")) != -1 or (detail[i].find("晴時々雲")) != -1:
+   elif (detail[i].find("晴一時曇")) != -1 or (detail[i].find("晴のち曇")) != -1 or (detail[i].find("晴時々曇")) != -1:
        files = {'imageFile': open(icon_path + "SunToCloud.png","rb")}
        line_notify = requests.post(line_notify_api, data=payload, headers=headers, files=files)
                                         
