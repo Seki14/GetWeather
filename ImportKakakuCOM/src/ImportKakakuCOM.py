@@ -32,7 +32,7 @@ date = datetime.datetime.now().strftime('%Y%m%d%H%M')
 #to:送信先メールアドレス
 #sub:メールタイトル
 #body:メール本文
-to = 'seki.ishikawa@gmail.com'
+to = 'YOUR EMAIL ADDRESS'
 sub = '【' + datetime.datetime.now().strftime('%m/%d')+ '】' + '価格.comのランキング情報'
 body = ''
 
@@ -46,7 +46,7 @@ def scraping(url,outputfile):
            
 ### sendGmailAttatch:出力ファイルを添付してメール送信するクラス ############
 class sendGmailAttach:
-    username, password = 'seki.ishikawa@gmail.com', 'seki14kawa'
+    username, password = 'YOUR EMAIL ADDRESS', 'YOUR PASSWORD'
 
     def __init__(self, to, sub, body, attach_file, attach_file2,attach_file3, attach_file4, attach_file5, attach_file6, attach_file7, attach_file8):
         host, port = 'smtp.gmail.com', 465
