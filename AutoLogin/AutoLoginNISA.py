@@ -2,41 +2,38 @@
 
 # Tool name         :AutoLoginNISA
 # Module name       :AutoLoginNISA.py
-# Detail            :楽天証券のWEBページへのログインと資産一覧のCSVファイルを自動化したスクリプト
+# Detail            :楽天証券のWEBページへのログインと資産一覧スクリーンショットを自動で取得するスクリプト
 # Implementer       :R.Ishikawa
-# Version           :1.2
-# Last update       :2020/10/22
+# Version           :1.3
+# Last update       :2020/12/5
 
 # HISTORY
-#1 新規作成                            Ver.1.1  R.I  2020/10/19
-#2 スクリーンショットを取得する処理を追加     Ver.1.2  R.I  2020/11/22
+#1 新規作成                                                Ver.1.1  R.I  2020/10/19
+#2 スクリーンショットを取得する処理を追加                         Ver.1.2  R.I  2020/11/22
+#3 CSV取得を廃止 ヘッドレスモードで起動する処理に変更             Ver.1.3  R.I  2020/12/5
 
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.chrome.options import Options
 import time
 import os
 import shutil
-import glob
 import datetime
-
-# move_CSV : 条件を満たすファイルを一括で移動するメソッド
-  # from_path : 移動対象のファイルの格納先ディレクトリパス
-  # to_path : 移動先のディレクトリパス
-
-def move_CSV(to_path, from_path, recursive=True):
-    for p in glob.glob(from_path, recursive=recursive):
-        shutil.move(p, to_path)
+import csv
 
 # 自動操作対象URL
 target_url = "https://www.rakuten-sec.co.jp/"
 
-# 資産一覧CSV格納先
-csv_path = "[資産一覧CSVファイルを格納したいディレクトリパス]"
 # スクリーンショット格納先
-screenshot_path = "[スクリーンショットを格納したいディレクトリパス]"
+asset_screenshot_path = "/[任意の階層]/01_Asset/"
+TotalReturn_screenshot_path = "[任意の階層]/02_ToTalReturn/"
+graph_screenshot_path = "/[任意の階層]/03_Graph/"
+
 # スクリーンショットファイルパス
-screenshot_file = screenshot_path + datetime.datetime.now().strftime('%Y_%m%d_%H%M%S') + ".png"
+asset_screenshot_file = asset_screenshot_path + "Asset" + "_" + datetime.datetime.now().strftime('%Y_%m%d_%H%M%S') + ".png"
+TotalReturn_screenshot_file = TotalReturn_screenshot_path + "TotalReturn" + "_" + datetime.datetime.now().strftime('%Y_%m%d_%H%M%S') + ".png"
+graph_screenshot_file = graph_screenshot_path + "Graph" + "_" + datetime.datetime.now().strftime('%Y_%m%d_%H%M%S') + ".png"
 
 # ドライバー格納先
 driver_path = "chromedriverが格納されているパスを入力"
@@ -48,45 +45,81 @@ password = "パスワードを入力"
 driver = webdriver.Chrome(driver_path)
 driver.get(target_url)
 
+# Chrome Driverをヘッドレスモードで起動する
+options = Options()
+options.add_argument('--headless')
+driver = webdriver.Chrome(driver_path, options=options)
+driver.get(target_url)
+
 # ログインIDをインプットする
 login_id_box = driver.find_element_by_xpath('//*[@id="form-login-id"]')
 login_id_box.send_keys(login_id)
-
 # パスワードをインプットする
 password_box = driver.find_element_by_xpath('//*[@id="form-login-pass"]')
 password_box.send_keys(password)
+
 time.sleep(3)
 
 # ログインボタンを探す
 login_button = driver.find_element_by_xpath('//*[@id="VISITOR_INDEX"]/section[1]/div/div/div[3]/div[1]/form/button')
-
 # ログインボタンをクリック
 login_button.click()
+
 time.sleep(3)
 
 # 保有商品一覧ボタンを探す
 show_list_button = driver.find_element_by_xpath('//*[@id="member-top-btn-stk-possess"]')
-
 # 保有商品一覧ボタンをクリック
 show_list_button.click()
+
 time.sleep(3)
-
-# CSVで保存ボタンを探す
-save_csv_button = driver.find_element_by_xpath('//*[@id="printLink"]/table/tbody/tr/td[4]/div/a')
-
-# CSVで保存ボタンをクリックし、資産一覧CSVをダウンロード
-save_csv_button.click()
-time.sleep(3)
-
-# ダウンロードした資産一覧CSVを資産一覧ディレクトリに移動
-move_CSV(csv_path,'/Users/[ユーザ名]/Downloads/assetbalance(all)_*.csv',True)
 
 # Chrome画面の横幅・縦幅の長さ
 screenshot_wedth = driver.execute_script("return document.body.scrollWidth")
 screenshot_height = driver.execute_script("return document.body.scrollHeight")
-
 # Chrome画面の縦幅・横幅の長さを取得。
 driver.set_window_size(screenshot_wedth,screenshot_height)
+# スクリーンショットを取得し、ScreenShotディレクトリ直下にPNGファイルを保存。
+driver.save_screenshot(asset_screenshot_file)
 
-# スクリーンショットを取得し、imageディレクトリ直下にPNGファイルを保存。
-driver.save_screenshot(screenshot_file)
+time.sleep(3)
+
+# トータルリターンボタンを探す
+total_return_button = driver.find_element_by_xpath('/html/body/div[1]/div/div[7]/div/ul/li[4]/a')
+# トータルリターンボタンをクリック
+total_return_button.click()
+
+# Chrome画面の横幅・縦幅の長さ
+screenshot_wedth = driver.execute_script("return document.body.scrollWidth")
+screenshot_height = driver.execute_script("return document.body.scrollHeight")
+# Chrome画面の縦幅・横幅の長さを取得。
+driver.set_window_size(screenshot_wedth,screenshot_height)
+# スクリーンショットを取得し、ScreenShotディレクトリ直下にPNGファイルを保存。
+driver.save_screenshot(TotalReturn_screenshot_file)
+
+time.sleep(3)
+
+# 投信あしあとボタンを探す
+toushin_ashiato_button = driver.find_element_by_xpath('/html/body/div[1]/div/div[7]/div/ul/li[6]/a')
+# 投資信託ボタンをクリック
+toushin_ashiato_button.click()
+
+time.sleep(3)
+
+# グラフ表示ボタンを探す
+show_graph_button = driver.find_element_by_xpath('//*[@id="str-main-inner"]/table/tbody/tr/td/form/div[6]/table/tbody/tr/td/a/img')
+# グラフ表示ボタンをクリック
+show_graph_button.click()
+
+# Chrome画面の横幅・縦幅の長さ
+screenshot_wedth = driver.execute_script("return document.body.scrollWidth")
+screenshot_height = driver.execute_script("return document.body.scrollHeight")
+# Chrome画面の縦幅・横幅の長さを取得。
+driver.set_window_size(screenshot_wedth,screenshot_height)
+# スクリーンショットを取得し、ScreenShotディレクトリ直下にPNGファイルを保存。
+driver.save_screenshot(graph_screenshot_file)
+
+time.sleep(3)
+
+driver.quit()
+exit()
