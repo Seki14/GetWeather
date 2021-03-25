@@ -4,23 +4,24 @@
 # Module name       :AutoLoginNISA.py
 # Detail            :楽天証券のWEBページへのログインと資産一覧スクリーンショットを自動で取得するスクリプト
 # Implementer       :R.Ishikawa
-# Version           :1.3
-# Last update       :2020/12/5
+# Version           :1.4
+# Last update       :2021/3/25
 
 # HISTORY
-#1 新規作成                                                Ver.1.1  R.I  2020/10/19
+#1 新規作成                                                  Ver.1.1  R.I  2020/10/19
 #2 スクリーンショットを取得する処理を追加                         Ver.1.2  R.I  2020/11/22
-#3 CSV取得を廃止 ヘッドレスモードで起動する処理に変更             Ver.1.3  R.I  2020/12/5
+#3 CSV取得を廃止。ヘッドレスモードで起動する処理に変更。            Ver.1.3  R.I  2020/12/5
+#4 ChromedriverのVer.が古い場合に最新版をインストールする処理追加  Ver.1.4  R.I  2021/3/25
 
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
 import time
 import os
 import shutil
 import datetime
-import csv
 
 # 自動操作対象URL
 target_url = "https://www.rakuten-sec.co.jp/"
@@ -35,20 +36,16 @@ asset_screenshot_file = asset_screenshot_path + "Asset" + "_" + datetime.datetim
 TotalReturn_screenshot_file = TotalReturn_screenshot_path + "TotalReturn" + "_" + datetime.datetime.now().strftime('%Y_%m%d_%H%M%S') + ".png"
 graph_screenshot_file = graph_screenshot_path + "Graph" + "_" + datetime.datetime.now().strftime('%Y_%m%d_%H%M%S') + ".png"
 
-# ドライバー格納先
-driver_path = "chromedriverが格納されているパスを入力"
 # 証券番号
 login_id = "証券番号を入力"
 # パスワード
 password = "パスワードを入力"
 
-driver = webdriver.Chrome(driver_path)
-driver.get(target_url)
-
 # Chrome Driverをヘッドレスモードで起動する
 options = Options()
 options.add_argument('--headless')
-driver = webdriver.Chrome(driver_path, options=options)
+# Chromedriverのバージョンが古い場合、最新版をインストールする。
+driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
 driver.get(target_url)
 
 # ログインIDをインプットする
@@ -100,7 +97,7 @@ driver.save_screenshot(TotalReturn_screenshot_file)
 time.sleep(3)
 
 # 投信あしあとボタンを探す
-toushin_ashiato_button = driver.find_element_by_xpath('/html/body/div[1]/div/div[7]/div/ul/li[6]/a')
+toushin_ashiato_button = driver.find_element_by_xpath('/html/body/div[1]/div/div[7]/div/ul/li[7]/a')
 # 投資信託ボタンをクリック
 toushin_ashiato_button.click()
 
